@@ -14,8 +14,8 @@ class Board:
     BLACK = 'B'
     BLOCKED = 'XX'
 
-    @classmethod
-    def opponent(cls, color):
+    @staticmethod
+    def opponent(color):
         if color==Board.WHITE:
             return Board.BLACK
         elif color==Board.BLACK:
@@ -66,11 +66,13 @@ class Board:
         bsucc.board[xb][yb] = Board.BLOCKED
         return bsucc
 
+    @staticmethod
     def queen2str(q):
         if q<4:
             return Board.BLACK+str(q)
         return Board.WHITE+str(q%4)
 
+    @staticmethod
     def show_move(color,q,xf,yf,xb,yb):
         print("Jugador",color,"mueve reina",q%4,"hasta","("+str(xf)+","+str(yf)+")","bloqueando","("+str(xb)+","+str(yb)+")"+"\n")
 
