@@ -73,40 +73,49 @@ def play_match(white, black, time_limit=5):
         board = board.succ(queen, nq_x, nq_y, a_x, a_y)
 
 
-PLAYERS = [RandomPlayer]
-RIVAL = BaierPlayer
+try:
+    PLAYERS = [RandomPlayer]
+    RIVAL = BaierPlayer
 
-GAMES = dict()
-GAMES[BaierPlayer] = 0
+    GAMES = dict()
+    GAMES[RIVAL] = 0
 
-SCORES = dict()
-SCORES[BaierPlayer] = 0
+    SCORES = dict()
+    SCORES[RIVAL] = 0
 
-for p in PLAYERS:
-    GAMES[p] = 0
-    SCORES[p] = 0
+    for p in PLAYERS:
+        GAMES[p] = 0
+        SCORES[p] = 0
 
 
-ROUNDS = 2
-TIME_LIMIT = 2
-for player in PLAYERS:
+    ROUNDS = 2
+    TIME_LIMIT = 2
+    for player in PLAYERS:
 
-    tied = True
-    for _ in range(ROUNDS):
-        (winner1, _) = play_match(RIVAL, player, TIME_LIMIT)
-        SCORES[winner1] += 1
-        (winner2, _) = play_match(player, RIVAL, TIME_LIMIT)
-        SCORES[winner2] += 1
-        GAMES[RIVAL] += 2
-        GAMES[player] += 2
+        tied = True
+        for _ in range(ROUNDS):
 
-        if winner1 == winner2:
-            tied = False
-    if tied:
-        (winner3, _) = play_match(RIVAL, player, TIME_LIMIT)
-        SCORES[winner3] += 1
-        GAMES[RIVAL] += 1
-        GAMES[player] += 1
+            (winner1, _) = play_match(RIVAL, player, TIME_LIMIT)
+            SCORES[winner1] += 1
+            GAMES[player] += 1
+            GAMES[RIVAL] += 1
+
+            (winner2, _) = play_match(player, RIVAL, TIME_LIMIT)
+            SCORES[winner2] += 1
+            GAMES[player] += 1
+            GAMES[RIVAL] += 1
+
+            if winner1 == winner2:
+                tied = False
+
+        if tied:
+            (winner3, _) = play_match(RIVAL, player, TIME_LIMIT)
+            SCORES[winner3] += 1
+            GAMES[player] += 1
+            GAMES[RIVAL] += 1
+
+except KeyboardInterrupt:
+    pass
 
 print()
 print("Results:")

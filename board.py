@@ -12,7 +12,11 @@ class Board:
     BLANK = '--'
     WHITE = 'W'
     BLACK = 'B'
-    BLOCKED = 'XX'
+    BLOCKED = 'xx'
+
+    delta = [(-1, -1), (-1, 0), (-1, 1),
+             ( 0, -1),          ( 0, 1),
+             ( 1, -1), ( 1, 0), ( 1, 1)]
 
     @staticmethod
     def opponent(color):
@@ -131,37 +135,29 @@ class Board:
         for q in queens:
             queen_str=color+str(q%4)
 
-            for dx in [-1,0,1]:
-                for dy in [-1,0,1]:
-                    if dx==dy==0:
-                        continue
+            for (dx, dy) in Board.delta:
+                xf = self.queens[q][0] + dx
+                yf = self.queens[q][1] + dy
 
-                    xf = self.queens[q][0]+dx
-                    yf = self.queens[q][1]+dy
+                while 0 <= xf < 10 and 0 <= yf < 10:
+                    if self.board[xf][yf] != Board.BLANK:
+                        break
 
-                    while 0 <= xf < 10 and 0 <= yf < 10:
-                        if self.board[xf][yf] != Board.BLANK:
-                            break
+                    for (ddx, ddy) in Board.delta:
+                        xb = xf + ddx
+                        yb = yf + ddy
 
-                        for ddx in [-1,0,1]:
-                            for ddy in [-1,0,1]:
-                                if ddx==ddy==0:
-                                    continue
+                        while 0 <= xb < 10 and 0 <= yb <10:
+                            if self.board[xb][yb] != Board.BLANK and self.board[xb][yb] != queen_str:
+                                break
+                            moves.append((q,xf,yf,xb,yb))
 
-                                xb = xf+ddx
-                                yb = yf+ddy
+                            n += 1
+                            if n == limit:
+                                return moves
 
-                                while 0 <= xb < 10 and 0 <= yb <10:
-                                    if self.board[xb][yb] != Board.BLANK and self.board[xb][yb] != queen_str:
-                                        break
-                                    moves.append((q,xf,yf,xb,yb))
-
-                                    n += 1
-                                    if n == limit:
-                                        return moves
-
-                                    xb += ddx
-                                    yb += ddy
-                        xf += dx
-                        yf += dy
+                            xb += ddx
+                            yb += ddy
+                    xf += dx
+                    yf += dy
         return moves
