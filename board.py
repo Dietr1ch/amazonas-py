@@ -14,6 +14,14 @@ class Board:
     BLACK = 'B'
     BLOCKED = 'XX'
 
+    @classmethod
+    def opponent(cls, color):
+        if color==Board.WHITE:
+            return Board.BLACK
+        elif color==Board.BLACK:
+            return Board.WHITE
+        raise Exception("'%s' is not a Color" % color)
+
     def __init__(self,init_board=None):
         # create an initial board
         if init_board==None:
@@ -44,6 +52,7 @@ class Board:
 
     def __hash__(self):
         return hash(self.board.__repr__())
+
 
     def succ(self,queen,xf,yf,xb,yb):
          # returns a new board like self but with queen moved to xf,yf and position xb,yb blocked
