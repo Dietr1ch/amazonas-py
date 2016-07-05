@@ -39,6 +39,12 @@ class Board:
             s += str(i)+" "+" ".join(self.board[i]) + "\n"
         return s
 
+    def __eq__(self, other):
+        return isinstance(other, Board) and other.__repr__() == self.__repr__()
+
+    def __hash__(self):
+        return hash(self.board.__repr__())
+
     def succ(self,queen,xf,yf,xb,yb):
          # returns a new board like self but with queen moved to xf,yf and position xb,yb blocked
         bsucc=Board(self)
