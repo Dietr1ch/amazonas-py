@@ -3,6 +3,7 @@
 Judge
 """
 
+from color_print import Color
 from player_random import RandomPlayer
 from player_baier import BaierPlayer
 from player_uct_julio import JulioMonteCarlo
@@ -40,13 +41,13 @@ def play_match(white, black, time_limit=5, turn_limit=100):
     plies = 0
 
     if turn_limit < 100:
-        print("####################")
-        print("TURN LIMIT SET TO %d" % turn_limit)
-        print("####################")
+        Color.YELLOW.print("####################")
+        Color.YELLOW.print("TURN LIMIT SET TO %d" % turn_limit)
+        Color.YELLOW.print("####################")
     if time_limit < 2:
-        print("--------------------")
-        print("TIME LIMIT SET TO %d" % time_limit)
-        print("--------------------")
+        Color.YELLOW.print("--------------------")
+        Color.YELLOW.print("TIME LIMIT SET TO %d" % time_limit)
+        Color.YELLOW.print("--------------------")
 
     # Run the match
     for _ in range(turn_limit):
@@ -64,7 +65,7 @@ def play_match(white, black, time_limit=5, turn_limit=100):
                 print("%s won" % black_name)
                 return (black, plies, None)
         except Exception as e:
-            print("%s won.  %s lost by Exception(%s)" % (black_name, white_name, e))
+            print("%s won.  %s lost by Exception(%s)" % (black_name, white_name, Color.RED(e)))
             return (black, plies, white)
 
         # Update real board
@@ -84,7 +85,7 @@ def play_match(white, black, time_limit=5, turn_limit=100):
                 print("%s won" % white_name)
                 return (white, plies, None)
         except Exception as e:
-            print("%s won.  %s lost by Exception(%s)" % (white_name, black_name, e))
+            print("%s won.  %s lost by Exception(%s)" % (white_name, black_name, Color.RED(e)))
             return (white, plies, black)
 
         # Update real board
@@ -129,8 +130,8 @@ try:
 
 
     ROUNDS = 1
-    TURNS = 10
-    TIME_LIMIT = 1
+    TURNS = 100
+    TIME_LIMIT = 15
     for player in PLAYERS:
 
         tied = True
@@ -169,10 +170,12 @@ print("Results:")
 print("  * %20s: %d/%d" % (RIVAL.__name__, SCORES[RIVAL], GAMES[RIVAL]))
 for p in PLAYERS:
     print("  * %20s: %d/%d" % (p.__name__, SCORES[p], GAMES[p]))
-print("Unfinished games: %d" % GAMES[None])
+print("Unfinished games: %d" % SCORES[None])
 
+print()
 print("Shame:")
-print("  =( %20s: %d" % (RIVAL.__name__, SHAME[RIVAL]))
+if SHAME[RIVAL] > 0:
+    print("  =( %20s: %d" % (RIVAL.__name__, SHAME[RIVAL]))
 for p in PLAYERS:
     if SHAME[p] > 0:
         print("  =( %20s: %d" % (p.__name__, SHAME[p]))
