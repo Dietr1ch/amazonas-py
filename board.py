@@ -38,6 +38,7 @@ class Board:
             self.board = []
             for _ in range(10):
                 self.board.append([Board.BLANK]*10)
+
             self.queens = [[3, 0], [0, 3], [0, 6], [3, 9],
                            [6, 0], [9, 3], [9, 6], [6, 9]]
             num = 0
@@ -59,7 +60,24 @@ class Board:
         return s
 
     def __eq__(self, other):
-        return isinstance(other, Board) and other.__repr__() == self.__repr__()
+        # Check type
+        if not isinstance(other, Board):
+            return False
+
+        # Check queen lists
+        for (s_q, o_q) in zip(self.queens, other.queens):
+            if s_q != o_q:
+                return False
+
+        # Check board rows
+        for (s_r, o_r) in zip(self.board, other.board):
+            # Check row elements
+            for (s_e, o_e) in zip(s_r, o_r):
+                if s_e != o_e:
+                    return False
+
+        # No proof for `!=` found
+        return True
 
     def __hash__(self):
         return hash(self.board.__repr__())
