@@ -88,9 +88,9 @@ class Board:
 
     @staticmethod
     def show_move(color,q,xf,yf,xb,yb):
-        print("Jugador",color,"mueve reina",q%4,"hasta","("+str(xf)+","+str(yf)+")","bloqueando","("+str(xb)+","+str(yb)+")"+"\n")
+        print("%d moves amazona %s hasta (%d,%d) y dispara a (%d,%d)" % (color, q%4, xf,yf, xb,yb))
 
-    def is_legal_jump(self, q,xi,yi,xf,yf):
+    def is_legal_jump(self, q, xi, yi, xf, yf):
         q_str = Board.queen2str(q)
         dx = xf - xi
         dy = yf - yi
@@ -130,10 +130,10 @@ class Board:
         else:
             queens = range(4,8)
 
-        n = 0
         moves = []
+        moves_count = 0
         for q in queens:
-            queen_str=color+str(q%4)
+            queen_str = color + str(q%4)
 
             for (dx, dy) in Board.delta:
                 xf = self.queens[q][0] + dx
@@ -147,13 +147,13 @@ class Board:
                         xb = xf + ddx
                         yb = yf + ddy
 
-                        while 0 <= xb < 10 and 0 <= yb <10:
+                        while 0 <= xb < 10 and 0 <= yb < 10:
                             if self.board[xb][yb] != Board.BLANK and self.board[xb][yb] != queen_str:
                                 break
                             moves.append((q,xf,yf,xb,yb))
 
-                            n += 1
-                            if n == limit:
+                            moves_count += 1
+                            if moves_count >= limit:
                                 return moves
 
                             xb += ddx
