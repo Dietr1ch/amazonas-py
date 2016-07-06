@@ -105,8 +105,8 @@ class Board:
         return Board.WHITE+str(q%4)
 
     @staticmethod
-    def show_move(color,q,xf,yf,xb,yb):
-        print("%d moves amazona %s hasta (%d,%d) y dispara a (%d,%d)" % (color, q%4, xf,yf, xb,yb))
+    def show_move(color, q, xf, yf, xb, yb):
+        print("%s moves amazona %d hasta (%d,%d) y dispara a (%d,%d)" % (color, q%4, xf,yf, xb,yb))
 
     def is_legal_jump(self, q, xi, yi, xf, yf):
         q_str = Board.queen2str(q)
