@@ -11,6 +11,9 @@ from player_salas_d import Jorge_SalasD
 from player_oliva import OlivaPlayer
 from player_wolf import WolfPlayer
 from player_felix import FelixPlayer
+from player_gomez import KocoPlayer
+from player_franco import FMPlayer
+from player_gasevi import GaseviPlayer
 from ivan_player import MapachePlayer
 from board import Board
 
@@ -93,16 +96,19 @@ def play_match(white, black, time_limit=5, turn_limit=100):
 
 
 try:
-    PLAYERS = [OlivaPlayer,
-               JulioMonteCarlo,
-               Jorge_SalasA,
-               Jorge_SalasD,
-               MapachePlayer,
-               WolfPlayer,
-               FelixPlayer,
-               BaierPlayer
+    PLAYERS = [
+        FelixPlayer,                 # 0 Felix     Fischer
+        KocoPlayer,                  # 1 Rodrigo   Gómez
+        JulioMonteCarlo,             # 2 Julio     Hurtado
+        FMPlayer,                    # 3 Franco    Muñoz
+        OlivaPlayer,                 # 4 Sebastián Oliva
+        MapachePlayer,               # 5 Iván      Rubio
+        Jorge_SalasA, Jorge_SalasD,  # 6 Jorge     Salas
+        GaseviPlayer,                # 7 Gabriel   Sepúlveda
+        WolfPlayer,                  # 8 Iván      Wolf
+        RandomPlayer
     ]
-    RIVAL = RandomPlayer
+    RIVAL = BaierPlayer
 
     SHAME = dict()
     SHAME[RIVAL] = 0
