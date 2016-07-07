@@ -3,6 +3,7 @@
 Judge
 """
 
+from time import time
 from color_print import Color
 from player_random import RandomPlayer
 from player_baier import BaierPlayer
@@ -19,6 +20,7 @@ from ivan_player import MapachePlayer
 from board import Board
 
 
+TIME_MARGIN = 1.2
 def play_match(white, black, time_limit=5, turn_limit=100):
     """
     Runs a single match
@@ -57,7 +59,10 @@ def play_match(white, black, time_limit=5, turn_limit=100):
         (queen, nq_x, nq_y, a_x, a_y) = (None, None, None, None, None)
         try:
             if board_copy.can_play(Board.WHITE):
+                t = time()
                 queen, nq_x, nq_y, a_x, a_y = player_white.play(board_copy)
+                if time() - t > TIME_MARGIN * time_limit:
+                    raise Exception("TLE")
                 Board.show_move(white_name, queen, nq_x, nq_y, a_x, a_y)
                 plies += 1
             else:
@@ -77,7 +82,10 @@ def play_match(white, black, time_limit=5, turn_limit=100):
         (queen, nq_x, nq_y, a_x, a_y) = (None, None, None, None, None)
         try:
             if board_copy.can_play(Board.BLACK):
+                t = time()
                 queen, nq_x, nq_y, a_x, a_y = player_black.play(board_copy)
+                if time() - t > TIME_MARGIN * time_limit:
+                    raise Exception("TLE")
                 Board.show_move(black_name, queen, nq_x, nq_y, a_x, a_y)
                 plies += 1
             else:
