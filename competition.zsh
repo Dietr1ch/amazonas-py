@@ -42,3 +42,7 @@
 ./judge.py --p1 6 --p2 8 $@ > /dev/null &
 
 ./judge.py --p1 7 --p2 8 $@ > /dev/null &
+
+wait
+
+cat *.out | sort | uniq --count > winners
